@@ -8,7 +8,7 @@ variable "postfix-us" {
 
 resource "azurerm_resource_group" "rg-us" {
   name     = "webapp-rg-us"
-  location = "East US"  # use the region of your choice
+  location = "East US 2"  # use the region of your choice
 }
 
 #############################
