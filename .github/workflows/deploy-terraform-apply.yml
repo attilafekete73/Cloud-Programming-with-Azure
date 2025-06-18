@@ -1,6 +1,8 @@
 name: Deploy Terraform to Azure Apply
 
-
+on:
+  push:
+  pull_request:
 
 jobs:
   terraform:
