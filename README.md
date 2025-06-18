@@ -17,3 +17,4 @@ az storage account create --name $storageaccount --resource-group $resourceGroup
 az storage container create --name $containerName --account-name $storageaccount
 $accountKey = (az storage account keys list --resource-group $resourceGroup --account-name $storageaccount --query '[0].value' -o tsv)
 
+stporageaccount contributor privilage to the service prncipal CloudProgrammingServicePrincipal on tfstate resource group
