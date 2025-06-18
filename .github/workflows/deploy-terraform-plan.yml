@@ -27,8 +27,9 @@ jobs:
         run: echo "TF_VAR_postfix=${{ vars.RESOURCE_POSTFIX }}" >> $GITHUB_ENV
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -backend-config="resource_group_name=tfstate" -backend-config="storage_account_name=tfstate28091" -backend-config="container_name=tfstate" -backend-config="key=terraform.tfstate" -backend-config="access_key=${{ secrets.AZURE_TFSTATE_STORAGE_ACCOUNT_KEY }}"
         working-directory: ./tf
+        
 
       - name: Terraform Plan
         run: terraform plan
