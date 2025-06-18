@@ -1,8 +1,8 @@
 name: Deploy Terraform to Azure Apply
 
 on:
-  push:
-  pull_request:
+  workflow_dispatch:
+    
 
 jobs:
   terraform:
