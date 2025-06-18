@@ -5,8 +5,6 @@ name: Build and deploy PHP app to Azure Web App - cloudprogrammingproject-281141
 
 on:
   push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
@@ -58,10 +56,16 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
-        run: rm release.zip
+
+      - name: move the files from the html directory to the root directory
         run: mv html/* .
-        run: rmdir html
       
+      - name: remove release.zip
+        run: rm release.zip
+      
+      - name: remove html directory
+        run: rmdir html
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
