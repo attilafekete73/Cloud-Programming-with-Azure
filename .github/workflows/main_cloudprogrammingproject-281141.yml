@@ -5,9 +5,6 @@ name: Build and deploy PHP app to Azure Web App - cloudprogrammingproject-281141
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
 
 jobs:
   build:
@@ -34,7 +31,7 @@ jobs:
         run: composer validate --no-check-publish && composer install --prefer-dist --no-progress
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+        run: zip release.zip ./html/* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -59,12 +56,21 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
       
+      - name: move the files from the html directory to the root directory
+        run: mv html/* .
+      
+      - name: remove release.zip
+        run: rm release.zip
+      
+      - name: remove html directory
+        run: rmdir html
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E40DDDC67FB74ACE865657C8167A617E }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_B0D22009B67C42BDB683EA398DC2F94F }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_6CE4FC8C446D43B885A1A96C086EAD78 }}
+          client-id: ${{ secrets.__clientidsecretname__ }}
+          tenant-id: ${{ secrets.__tenantidsecretname__ }}
+          subscription-id: ${{ secrets.__subscriptionidsecretname__ }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
