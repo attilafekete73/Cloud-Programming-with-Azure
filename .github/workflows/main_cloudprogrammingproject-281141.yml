@@ -58,6 +58,9 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
+        run: rm release.zip
+        run: mv html/* .
+        run: rmdir html
       
       - name: Login to Azure
         uses: azure/login@v2
