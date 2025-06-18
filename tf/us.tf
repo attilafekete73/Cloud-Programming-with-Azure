@@ -1,4 +1,4 @@
-variable "postfix_us" {
+variable "postfix-us" {
   description = "Postfix value from GitHub Actions environment variable POSTFIX (using TF_VAR_postfix)"
   type        = string
 }
@@ -6,8 +6,8 @@ variable "postfix_us" {
 # Resource Group
 #############################
 
-resource "azurerm_resource_group" "rg_us" {
-  name     = "webapp-rg_us"
+resource "azurerm_resource_group" "rg-us" {
+  name     = "webapp-rg-us"
   location = "East US"  # use the region of your choice
 }
 
@@ -15,10 +15,10 @@ resource "azurerm_resource_group" "rg_us" {
 # App Service Plan (now Service Plan)
 #############################
 
-resource "azurerm_service_plan" "asp_us" {
-  name                = "webapp-asp_us"
-  location            = azurerm_resource_group.rg_us.location
-  resource_group_name = azurerm_resource_group.rg_us.name
+resource "azurerm_service_plan" "asp-us" {
+  name                = "webapp-asp-us"
+  location            = azurerm_resource_group.rg-us.location
+  resource_group_name = azurerm_resource_group.rg-us.name
   os_type             = "Linux"
   sku_name = "S1"
 }
@@ -27,11 +27,11 @@ resource "azurerm_service_plan" "asp_us" {
 # App Service (Frontend & Backend)
 #############################
 
-resource "azurerm_linux_web_app" "app_us" {
-  name                = "cloudprogrammingproject-${var.postfix_us}" # Updated to use POSTFIX value
-  location            = azurerm_resource_group.rg_us.location
-  resource_group_name = azurerm_resource_group.rg_us.name
-  service_plan_id     = azurerm_service_plan.asp_us.id
+resource "azurerm_linux_web_app" "app-us" {
+  name                = "cloudprogrammingproject-${var.postfix-us}" # Updated to use POSTFIX value
+  location            = azurerm_resource_group.rg-us.location
+  resource_group_name = azurerm_resource_group.rg-us.name
+  service_plan_id     = azurerm_service_plan.asp-us.id
 
   site_config {
     application_stack {
@@ -55,8 +55,8 @@ resource "azurerm_linux_web_app" "app_us" {
 # App Service Source Control
 #############################
 
-resource "azurerm_app_service_source_control" "app_source_us" {
-  app_id  = "/subscriptions/88eaf9d2-b255-412e-a937-141f9281d5bd/resourceGroups/webapp-rg_us/providers/Microsoft.Web/sites/cloudprogrammingproject-${var.postfix_us}" # Updated to use POSTFIX value
+resource "azurerm_app_service_source_control" "app_source-us" {
+  app_id  = "/subscriptions/88eaf9d2-b255-412e-a937-141f9281d5bd/resourceGroups/webapp-rg-us/providers/Microsoft.Web/sites/cloudprogrammingproject-${var.postfix-us}" # Updated to use POSTFIX value
   branch  = "main"
   repo_url = "https://github.com/attilafekete73/Cloud-Programming-with-Azure"
 }
@@ -65,11 +65,11 @@ resource "azurerm_app_service_source_control" "app_source_us" {
 # Autoscale Settings
 #############################
 
-resource "azurerm_monitor_autoscale_setting" "autoscale_us" {
-  name                = "autoscale-webapp_us"
-  location            = azurerm_resource_group.rg_us.location
-  resource_group_name = azurerm_resource_group.rg_us.name
-  target_resource_id  = azurerm_service_plan.asp_us.id
+resource "azurerm_monitor_autoscale_setting" "autoscale-us" {
+  name                = "autoscale-webapp-us"
+  location            = azurerm_resource_group.rg-us.location
+  resource_group_name = azurerm_resource_group.rg-us.name
+  target_resource_id  = azurerm_service_plan.asp-us.id
   enabled             = true
 
   profile {
@@ -84,7 +84,7 @@ resource "azurerm_monitor_autoscale_setting" "autoscale_us" {
     rule {
       metric_trigger {
         metric_name        = "CpuPercentage"
-        metric_resource_id = azurerm_service_plan.asp_us.id
+        metric_resource_id = azurerm_service_plan.asp-us.id
         time_grain         = "PT1M"
         statistic          = "Average"
         time_window        = "PT5M"
@@ -104,7 +104,7 @@ resource "azurerm_monitor_autoscale_setting" "autoscale_us" {
     rule {
       metric_trigger {
         metric_name        = "CpuPercentage"
-        metric_resource_id = azurerm_service_plan.asp_us.id
+        metric_resource_id = azurerm_service_plan.asp-us.id
         time_grain         = "PT1M"
         statistic          = "Average"
         time_window        = "PT5M"

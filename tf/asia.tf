@@ -1,4 +1,4 @@
-variable "postfix_asia" {
+variable "postfix-asia" {
   description = "Postfix value from GitHub Actions environment variable POSTFIX (using TF_VAR_postfix)"
   type        = string
 }
@@ -7,8 +7,8 @@ variable "postfix_asia" {
 # Resource Group
 #############################
 
-resource "azurerm_resource_group" "rg_asia" {
-  name     = "webapp-rg_asia"
+resource "azurerm_resource_group" "rg-asia" {
+  name     = "webapp-rg-asia"
   location = "Southeast Asia"  # use the region of your choice
 }
 
@@ -16,10 +16,10 @@ resource "azurerm_resource_group" "rg_asia" {
 # App Service Plan (now Service Plan)
 #############################
 
-resource "azurerm_service_plan" "asp_asia" {
-  name                = "webapp-asp_asia"
-  location            = azurerm_resource_group.rg_asia.location
-  resource_group_name = azurerm_resource_group.rg_asia.name
+resource "azurerm_service_plan" "asp-asia" {
+  name                = "webapp-asp-asia"
+  location            = azurerm_resource_group.rg-asia.location
+  resource_group_name = azurerm_resource_group.rg-asia.name
   os_type             = "Linux"
   sku_name = "S1"
 }
@@ -28,11 +28,11 @@ resource "azurerm_service_plan" "asp_asia" {
 # App Service (Frontend & Backend)
 #############################
 
-resource "azurerm_linux_web_app" "app_asia" {
-  name                = "cloudprogrammingproject-${var.postfix_asia}" # Updated to use POSTFIX value
-  location            = azurerm_resource_group.rg_asia.location
-  resource_group_name = azurerm_resource_group.rg_asia.name
-  service_plan_id     = azurerm_service_plan.asp_asia.id
+resource "azurerm_linux_web_app" "app-asia" {
+  name                = "cloudprogrammingproject-${var.postfix-asia}" # Updated to use POSTFIX value
+  location            = azurerm_resource_group.rg-asia.location
+  resource_group_name = azurerm_resource_group.rg-asia.name
+  service_plan_id     = azurerm_service_plan.asp-asia.id
 
   site_config {
     application_stack {
@@ -56,8 +56,8 @@ resource "azurerm_linux_web_app" "app_asia" {
 # App Service Source Control
 #############################
 
-resource "azurerm_app_service_source_control" "app_source_asia" {
-  app_id  = "/subscriptions/88eaf9d2-b255-412e-a937-141f9281d5bd/resourceGroups/webapp-rg_asia/providers/Microsoft.Web/sites/cloudprogrammingproject-${var.postfix_asia}" # Updated to use POSTFIX value
+resource "azurerm_app_service_source_control" "app_source-asia" {
+  app_id  = "/subscriptions/88eaf9d2-b255-412e-a937-141f9281d5bd/resourceGroups/webapp-rg-asia/providers/Microsoft.Web/sites/cloudprogrammingproject-${var.postfix-asia}" # Updated to use POSTFIX value
   branch  = "main"
   repo_url = "https://github.com/attilafekete73/Cloud-Programming-with-Azure"
 }
@@ -66,11 +66,11 @@ resource "azurerm_app_service_source_control" "app_source_asia" {
 # Autoscale Settings
 #############################
 
-resource "azurerm_monitor_autoscale_setting" "autoscale_asia" {
-  name                = "autoscale-webapp_asia"
-  location            = azurerm_resource_group.rg_asia.location
-  resource_group_name = azurerm_resource_group.rg_asia.name
-  target_resource_id  = azurerm_service_plan.asp_asia.id
+resource "azurerm_monitor_autoscale_setting" "autoscale-asia" {
+  name                = "autoscale-webapp-asia"
+  location            = azurerm_resource_group.rg-asia.location
+  resource_group_name = azurerm_resource_group.rg-asia.name
+  target_resource_id  = azurerm_service_plan.asp-asia.id
   enabled             = true
 
   profile {
@@ -85,7 +85,7 @@ resource "azurerm_monitor_autoscale_setting" "autoscale_asia" {
     rule {
       metric_trigger {
         metric_name        = "CpuPercentage"
-        metric_resource_id = azurerm_service_plan.asp_asia.id
+        metric_resource_id = azurerm_service_plan.asp-asia.id
         time_grain         = "PT1M"
         statistic          = "Average"
         time_window        = "PT5M"
@@ -105,7 +105,7 @@ resource "azurerm_monitor_autoscale_setting" "autoscale_asia" {
     rule {
       metric_trigger {
         metric_name        = "CpuPercentage"
-        metric_resource_id = azurerm_service_plan.asp_asia.id
+        metric_resource_id = azurerm_service_plan.asp-asia.id
         time_grain         = "PT1M"
         statistic          = "Average"
         time_window        = "PT5M"
