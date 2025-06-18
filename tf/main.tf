@@ -71,7 +71,6 @@ output "postfix_value" {
 resource "azurerm_app_service_source_control" "app_source" {
   app_id  = "/subscriptions/88eaf9d2-b255-412e-a937-141f9281d5bd/resourceGroups/webapp-rg/providers/Microsoft.Web/sites/cloudprogrammingproject-${var.postfix}" # Updated to use POSTFIX value
   branch  = "main"
-  id      = "/subscriptions/88eaf9d2-b255-412e-a937-141f9281d5bd/resourceGroups/webapp-rg/providers/Microsoft.Web/sites/cloudprogrammingproject-${var.postfix}" # Updated to use POSTFIX value
   repo_url = "https://github.com/attilafekete73/Cloud-Programming-with-Azure"
 }
 
