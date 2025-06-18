@@ -80,5 +80,3 @@ jobs:
           slot-name: 'Production'
           package: .
       
-      - name: Set TF_VAR_postfix from secret
-        run: echo "TF_VAR_postfix=${{ secrets.RESOURCE_POSTFIX }}" >> $GITHUB_ENV

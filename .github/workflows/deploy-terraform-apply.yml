@@ -30,3 +30,6 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve
         working-directory: ./tf
+
+      - name: Set TF_VAR_postfix from secret
+        run: echo "TF_VAR_postfix=${{ secrets.RESOURCE_POSTFIX }}" >> $GITHUB_ENV
