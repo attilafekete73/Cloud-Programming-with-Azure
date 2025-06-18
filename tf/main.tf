@@ -7,9 +7,9 @@ provider "random" {
   # using default configuration
 }
 
-resource "random_integer" "six_digit" {
-  min = 100000
-  max = 999999
+variable "postfix" {
+  description = "Postfix value from GitHub Actions environment variable POSTFIX (using TF_VAR_postfix)"
+  type        = string
 }
 
 #############################
@@ -38,7 +38,7 @@ resource "azurerm_service_plan" "asp" {
 #############################
 
 resource "azurerm_linux_web_app" "app" {
-  name                = "cloudprogrammingproject-${random_integer.six_digit.result}"
+  name                = "cloudprogrammingproject-${var.postfix}" # Updated to use POSTFIX value
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   service_plan_id     = azurerm_service_plan.asp.id
@@ -52,8 +52,8 @@ resource "azurerm_linux_web_app" "app" {
   app_settings = {
     # If you have configuration settings, add them here.
     # e.g., "WEBSITE_RUN_FROM_PACKAGE" = "1"
-    "WEBSITES_PORT" = "80"
-    "DOCKER_ENABLE_CI" = "true"
+    "WEBSITES_PORT"          = "80"
+    "DOCKER_ENABLE_CI"       = "true"
     "WEBSITE_RUN_FROM_PACKAGE" = "1"
   }
 
@@ -66,16 +66,10 @@ resource "azurerm_linux_web_app" "app" {
 #############################
 
 resource "azurerm_app_service_source_control" "app_source" {
-  app_id                 = "/subscriptions/88eaf9d2-b255-412e-a937-141f9281d5bd/resourceGroups/webapp-rg/providers/Microsoft.Web/sites/cloudprogrammingproject-${random_integer.six_digit.result}"
-  branch                = "main"
-  id                   = "/subscriptions/88eaf9d2-b255-412e-a937-141f9281d5bd/resourceGroups/webapp-rg/providers/Microsoft.Web/sites/cloudprogrammingproject-${random_integer.six_digit.result}"
-  repo_url             = "https://github.com/attilafekete73/Cloud-Programming-with-Azure"
-  rollback_enabled = false
-  scm_type = "GitHubAction"
-  use_local_git = false
-  use_manual_integration = false
-  use_mercurial = false
-  uses_github_action = true
+  app_id  = "/subscriptions/88eaf9d2-b255-412e-a937-141f9281d5bd/resourceGroups/webapp-rg/providers/Microsoft.Web/sites/cloudprogrammingproject-${var.postfix}" # Updated to use POSTFIX value
+  branch  = "main"
+  id      = "/subscriptions/88eaf9d2-b255-412e-a937-141f9281d5bd/resourceGroups/webapp-rg/providers/Microsoft.Web/sites/cloudprogrammingproject-${var.postfix}" # Updated to use POSTFIX value
+  repo_url = "https://github.com/attilafekete73/Cloud-Programming-with-Azure"
 }
 
 #############################
