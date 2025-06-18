@@ -42,31 +42,10 @@ resource "azurerm_linux_web_app" "app" {
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   service_plan_id     = azurerm_service_plan.asp.id
-  client_certificate_exclusion_paths = ""
-  hosting_environment_id = ""
-  id                  = "/subscriptions/88eaf9d2-b255-412e-a937-141f9281d5bd/resourceGroups/webapp-rg/providers/Microsoft.Web/sites/cloudprogrammingproject-${random_integer.six_digit.result}"
-  virtual_network_subnet_id = ""
-  zip_deploy_file = ""
 
   site_config {
-    api_definition_url = ""
-    api_management_api_id = ""
-    app_command_line = ""
-    container_registry_managed_identity_client_id = ""
-    health_check_path = ""
     application_stack {
       php_version = "8.3"
-      docker_image_name = ""
-      docker_registry_url = ""
-      docker_registry_username = ""
-      dotnet_version = ""
-      go_version = ""
-      java_server = ""
-      java_server_version = ""
-      java_version = ""
-      node_version = ""
-      python_version = ""
-      ruby_version = ""
     }
   }
 
