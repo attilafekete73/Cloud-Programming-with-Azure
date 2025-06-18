@@ -1,5 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head><title>Cloud Programming</title></head>
-  <body><h1>Hello World!</h1></body>
+  <body>
+    <h1>Hello World!</h1>
+    <p>Click the button below to check the latency of this site.</p>
+    <button onclick="checkLatency()">Check Latency</button>
+    <p id="latency">Latency: -- ms</p>
+
+    <script>
+      function checkLatency() {
+        const startTime = performance.now();
+        const testImage = new Image();
+        const latencyDisplay = document.getElementById('latency');
+
+        testImage.src = `?cacheBuster=${Math.random()}`; // Prevent caching
+        testImage.onload = function () {
+          const endTime = performance.now();
+          const latency = Math.round(endTime - startTime);
+          latencyDisplay.textContent = `Latency: ${latency} ms`;
+        };
+
+        testImage.onerror = function () {
+          latencyDisplay.textContent = 'Error: Unable to measure latency.';
+        };
+      }
+    </script>
+  </body>
 </html>
