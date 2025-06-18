@@ -23,12 +23,12 @@ jobs:
         with:
           terraform_version: '1.3.5'  # Update this to the version of Terraform you prefer
       
-      - name: Set TF_VAR_postfix_eu from variable
-        run: echo "TF_VAR_postfix_eu=${{ vars.RESOURCE_POSTFIX_EU }}" >> $GITHUB_ENV
-      - name: Set TF_VAR_postfix_us from variable
-        run: echo "TF_VAR_postfix_us=${{ vars.RESOURCE_POSTFIX_US }}" >> $GITHUB_ENV
-      - name: Set TF_VAR_postfix_asia from variable
-        run: echo "TF_VAR_postfix_asia=${{ vars.RESOURCE_POSTFIX_ASIA }}" >> $GITHUB_ENV
+      - name: Set TF_VAR_postfix-eu from variable
+        run: echo "TF_VAR_postfix-eu=${{ vars.RESOURCE_POSTFIX_EU }}" >> $GITHUB_ENV
+      - name: Set TF_VAR_postfix-us from variable
+        run: echo "TF_VAR_postfix-us=${{ vars.RESOURCE_POSTFIX_US }}" >> $GITHUB_ENV
+      - name: Set TF_VAR_postfix-asia from variable
+        run: echo "TF_VAR_postfix-asia=${{ vars.RESOURCE_POSTFIX_ASIA }}" >> $GITHUB_ENV
 
       - name: Set subsciption ID
         run: echo "TF_VAR_subscription_id=${{ vars.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
