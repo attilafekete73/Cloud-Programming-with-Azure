@@ -1,0 +1,35 @@
+name: Deploy Terraform to Azure
+
+on:
+  push:
+    branches:
+      - main  # Set your deployment branch here
+  pull_request:
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          # Create a secret in your repository named AZURE_CREDENTIALS
+          # that contains your Azure service principal credentials in JSON format.
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set Up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: '1.3.5'  # Update this to the version of Terraform you prefer
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
