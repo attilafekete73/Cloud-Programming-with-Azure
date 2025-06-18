@@ -64,7 +64,10 @@ resource "azurerm_linux_web_app" "app" {
 #############################
 # App Service Source Control
 #############################
-
+output "postfix_value" {
+  description = "The value of the postfix variable"
+  value       = var.postfix
+}
 resource "azurerm_app_service_source_control" "app_source" {
   app_id  = "/subscriptions/88eaf9d2-b255-412e-a937-141f9281d5bd/resourceGroups/webapp-rg/providers/Microsoft.Web/sites/cloudprogrammingproject-${var.postfix}" # Updated to use POSTFIX value
   branch  = "main"
