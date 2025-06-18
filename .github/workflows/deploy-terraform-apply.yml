@@ -30,6 +30,9 @@ jobs:
       - name: Set TF_VAR_postfix_asia from variable
         run: echo "TF_VAR_postfix_asia=${{ vars.RESOURCE_POSTFIX_ASIA }}" >> $GITHUB_ENV
 
+      - name: Set subsciption ID
+        run: echo "TF_VAR_subscription_id=${{ vars.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
+
       - name: Terraform Init
         run: terraform init -backend-config="resource_group_name=tfstate" -backend-config="storage_account_name=tfstate28091" -backend-config="container_name=tfstate" -backend-config="key=terraform.tfstate" -backend-config="access_key=${{ secrets.AZURE_TFSTATE_STORAGE_ACCOUNT_KEY }}" -backend-config="client_id=${{ secrets.AZURE_CLIENT_ID }}" -backend-config="client_secret=${{ secrets.AZURE_CLIENT_SECRET }}" -backend-config="tenant_id=${{ secrets.AZURE_APPDEPLOY_TENANT_ID}}" -backend-config="subscription_id=${{ secrets.AZURE_APPDEPLOY_SUBSCRIPTION_ID }}"
         working-directory: ./tf
