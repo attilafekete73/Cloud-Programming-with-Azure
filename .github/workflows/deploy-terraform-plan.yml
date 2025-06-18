@@ -1,10 +1,6 @@
-name: Deploy Terraform to Azure
+name: Deploy Terraform to Azure Plan
 
-on:
-  push:
-    branches:
-      - main  # Set your deployment branch here
-  pull_request:
+
 
 jobs:
   terraform:
