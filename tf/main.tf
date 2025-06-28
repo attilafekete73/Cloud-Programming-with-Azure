@@ -5,7 +5,6 @@ variable "subscription_id" {
 
 variable "github_token" {
   type = string
-  sensitive = true
 }
 provider "azurerm" {
   features {}
