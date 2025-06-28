@@ -2,6 +2,11 @@ variable "subscription_id" {
   description = "get subscription ID"
   type        = string
 }
+
+variable "github_token" {
+  type = string
+  sensitive = true
+}
 provider "azurerm" {
   features {}
   subscription_id = var.subscription_id
@@ -21,4 +26,9 @@ terraform {
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
   }
+}
+
+resource "azurerm_source_control_token" "github" {
+  type = "Github"
+  token = var.github_token
 }
