@@ -29,7 +29,10 @@ jobs:
         run: echo "TF_VAR_postfix-us=${{ vars.RESOURCE_POSTFIX_US }}" >> $GITHUB_ENV
       - name: Set TF_VAR_postfix-asia from variable
         run: echo "TF_VAR_postfix-asia=${{ vars.RESOURCE_POSTFIX_ASIA }}" >> $GITHUB_ENV
-
+      - name: Set TF_VAR_github_token from secret
+        env:
+          TF_VAR_github_token: ${{ secrets.GH_ACCESS_TOKEN }}
+        run: echo "set gh token"
       - name: Set subsciption ID
         run: echo "TF_VAR_subscription_id=${{ vars.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
 
