@@ -41,7 +41,7 @@ jobs:
         working-directory: ./tf
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform apply -lock-timeout=60s -auto-approve
         working-directory: ./tf
 
 
