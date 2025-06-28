@@ -60,7 +60,7 @@ resource "azurerm_app_service_source_control" "app_source-us" {
   branch  = "main"
   repo_url = "https://github.com/attilafekete73/Cloud-Programming-with-Azure"
   depends_on = [
-    azurerm_source_control_token.github
+    azurerm_app_service_source_control_token.github
   ]
 
 }
