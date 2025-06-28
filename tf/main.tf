@@ -28,6 +28,6 @@ terraform {
 }
 
 resource "azurerm_source_control_token" "github" {
-  type = "Github"
+  type = "GitHub"
   token = var.github_token
 }
