@@ -27,7 +27,7 @@ terraform {
   }
 }
 
-resource "azurerm_source_control_token" "github" {
+resource "azurerm_app_service_source_control_token" "github" {
   type = "GitHub"
   token = var.github_token
 }
