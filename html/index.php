@@ -11,7 +11,7 @@
 
     <p id="country"></p>
 
-    <h2>This Website Is Hosted In: <?php echo getenv('REGION')</h2>
+    <h2>This Website Is Hosted In: <?php echo getenv('REGION')?></h2>
 
     <script>
       async function measureSelfLatency() {
