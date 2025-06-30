@@ -71,11 +71,25 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
 
-      - name: 'Deploy to Azure Web App'
+      - name: 'Deploy to Azure Web App Asia'
         uses: azure/webapps-deploy@v3
-        id: deploy-to-webapp
+        id: deploy-to-webapp-asia
         with:
-          app-name: 'cloudprogrammingproject-${{ vars.RESOURCE_POSTFIX }}'
+          app-name: 'cloudprogrammingproject-${{ vars.RESOURCE_POSTFIX_ASIA }}'
+          slot-name: 'Production'
+          package: .
+      - name: 'Deploy to Azure Web App EU'
+        uses: azure/webapps-deploy@v3
+        id: deploy-to-webapp-eu
+        with:
+          app-name: 'cloudprogrammingproject-${{ vars.RESOURCE_POSTFIX_EU }}'
+          slot-name: 'Production'
+          package: .
+      - name: 'Deploy to Azure Web App US'
+        uses: azure/webapps-deploy@v3
+        id: deploy-to-webapp-us
+        with:
+          app-name: 'cloudprogrammingproject-${{ vars.RESOURCE_POSTFIX_US }}'
           slot-name: 'Production'
           package: .
       
