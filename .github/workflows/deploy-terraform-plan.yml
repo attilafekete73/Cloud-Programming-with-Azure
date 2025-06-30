@@ -1,4 +1,4 @@
-name: Deploy Terraform to Azure Apply
+name: Deploy Terraform to Azure Plan
 
 on:
   workflow_dispatch:
