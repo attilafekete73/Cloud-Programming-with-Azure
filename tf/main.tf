@@ -6,6 +6,21 @@ variable "subscription_id" {
 variable "github_token" {
   type = string
 }
+
+variable "us-appname" {
+  type = string
+  default = "cloudprogrammingproject-3628800-us.azurewebsites.net"
+}
+
+variable "eu-appname" {
+  type = string
+  default = "cloudprogrammingproject-3628800-eu.azurewebsites.net"
+}
+
+variable "as-appname" {
+  type = string
+  default = "cloudprogrammingproject-3628800-as.azurewebsites.net"
+}
 provider "azurerm" {
   features {}
   subscription_id = var.subscription_id
@@ -30,4 +45,32 @@ terraform {
 resource "azurerm_app_service_source_control_token" "github" {
   type = "GitHub"
   token = var.github_token
+}
+
+resource "azurerm_cdn_frontdoor_profile" "fd_profile" {
+  name                = "my-frontdoor-profile"
+  resource_group_name = "frontdoor-rg"
+  sku_name            = "Standard_AzureFrontDoor"
+}
+
+resource "azurerm_cdn_frontdoor_endpoint" "fd_endpoint" {
+  name                     = "my-endpoint"
+  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.fd_profile.id
+}
+
+resource "azurerm_cdn_frontdoor_origin_group" "fd_origin_group" {
+  name                     = "my-origin-group"
+  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.fd_profile.id
+
+  load_balancing {
+    sample_size                 = 4
+    successful_samples_required = 3
+  }
+
+  health_probe {
+    path                = "/"
+    protocol            = "Https"
+    request_type        = "HEAD"
+    interval_in_seconds = 120
+  }
 }

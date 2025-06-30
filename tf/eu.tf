@@ -29,7 +29,7 @@ resource "azurerm_service_plan" "asp-eu" {
 #############################
 
 resource "azurerm_linux_web_app" "app-eu" {
-  name                = "cloudprogrammingproject-${var.postfix-eu}" # Updated to use POSTFIX value
+  name                = var.eu-appname # Updated to use POSTFIX value
   location            = azurerm_resource_group.rg-eu.location
   resource_group_name = azurerm_resource_group.rg-eu.name
   service_plan_id     = azurerm_service_plan.asp-eu.id
@@ -128,5 +128,34 @@ resource "azurerm_monitor_autoscale_setting" "autoscale-eu" {
   }
 }
 
+#############################
+# Front Door
+#############################
+resource "azurerm_cdn_frontdoor_origin" "eu_origin" {
+  name                          = "eu-origin"
+  cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.fd_origin_group.id
+  host_name                     = var.eu-appname
+  http_port                     = 80
+  https_port                    = 443
+  origin_host_header            = var.eu-appname
+  priority                      = 1
+  weight                        = 1000
+  certificate_name_check_enabled = true
+}
+
+resource "azurerm_cdn_frontdoor_route" "fd_route" {
+  name                          = "default-route"
+  cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.fd_endpoint.id
+  cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.fd_origin_group.id
+  cdn_frontdoor_origin_ids      = [
+    azurerm_cdn_frontdoor_origin.eu_origin.id,
+    # Add other origins here
+  ]
+  supported_protocols    = ["Http", "Https"]
+  patterns_to_match      = ["/*"]
+  forwarding_protocol    = "HttpsOnly"
+  https_redirect_enabled = true
+  link_to_default_domain = true
+}
 
 
