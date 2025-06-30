@@ -75,21 +75,21 @@ jobs:
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp-asia
         with:
-          app-name: 'cloudprogrammingproject-${{ vars.RESOURCE_POSTFIX_ASIA }}'
+          app-name: 'cloudprogrammingproject-3628800-as'
           slot-name: 'Production'
           package: .
       - name: 'Deploy to Azure Web App EU'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp-eu
         with:
-          app-name: 'cloudprogrammingproject-${{ vars.RESOURCE_POSTFIX_EU }}'
+          app-name: 'cloudprogrammingproject-3628800-eu'
           slot-name: 'Production'
           package: .
       - name: 'Deploy to Azure Web App US'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp-us
         with:
-          app-name: 'cloudprogrammingproject-${{ vars.RESOURCE_POSTFIX_US }}'
+          app-name: 'cloudprogrammingproject-3628800-us'
           slot-name: 'Production'
           package: .
       
