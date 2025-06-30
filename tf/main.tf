@@ -9,17 +9,17 @@ variable "github_token" {
 
 variable "us-appname" {
   type = string
-  default = "cloudprogrammingproject-3628800-us.azurewebsites.net"
+  default = "cloudprogrammingproject-3628800-us"
 }
 
 variable "eu-appname" {
   type = string
-  default = "cloudprogrammingproject-3628800-eu.azurewebsites.net"
+  default = "cloudprogrammingproject-3628800-eu"
 }
 
 variable "as-appname" {
   type = string
-  default = "cloudprogrammingproject-3628800-as.azurewebsites.net"
+  default = "cloudprogrammingproject-3628800-as"
 }
 provider "azurerm" {
   features {}
