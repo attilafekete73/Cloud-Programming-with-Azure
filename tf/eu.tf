@@ -57,7 +57,7 @@ resource "azurerm_linux_web_app" "app-eu" {
 #############################
 
 resource "azurerm_app_service_source_control" "app_source-eu" {
-  app_id  = "/subscriptions/88eaf9d2-b255-412e-a937-141f9281d5bd/resourceGroups/webapp-rg-eu/providers/Microsoft.Web/sites/cloudprogrammingproject-${var.postfix-eu}" # Updated to use POSTFIX value
+  app_id  = "/subscriptions/88eaf9d2-b255-412e-a937-141f9281d5bd/resourceGroups/webapp-rg-eu/providers/Microsoft.Web/sites/${var.eu-appname}" # Updated to use POSTFIX value
   branch  = "main"
   repo_url = "https://github.com/attilafekete73/Cloud-Programming-with-Azure"
   depends_on = [
