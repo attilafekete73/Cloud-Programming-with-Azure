@@ -142,7 +142,7 @@ resource "azurerm_cdn_frontdoor_origin" "as_origin" {
   certificate_name_check_enabled = true
 }
 
-resource "azurerm_cdn_frontdoor_route" "fd_route" {
+resource "azurerm_cdn_frontdoor_route" "fd_route_as" {
   name                          = "default-route"
   cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.fd_endpoint.id
   cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.fd_origin_group.id
