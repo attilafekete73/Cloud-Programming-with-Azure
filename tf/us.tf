@@ -45,6 +45,7 @@ resource "azurerm_linux_web_app" "app-us" {
     "WEBSITES_PORT"          = "80"
     "DOCKER_ENABLE_CI"       = "true"
     "WEBSITE_RUN_FROM_PACKAGE" = "1"
+    "REGION"                  = "US"
   }
 
   # Note: source_control block is not supported for azurerm_linux_web_app.

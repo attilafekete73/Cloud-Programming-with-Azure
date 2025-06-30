@@ -1,11 +1,3 @@
-<?php
-// Get server's public IP address
-$server_ip = $_SERVER['SERVER_ADDR'] ?? gethostbyname(gethostname());
-
-// Use an external API to get location info
-$details = @json_decode(file_get_contents("https://ipapi.co/{$server_ip}/json/"));
-?>
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -19,12 +11,7 @@ $details = @json_decode(file_get_contents("https://ipapi.co/{$server_ip}/json/")
 
     <p id="country"></p>
 
-    <h2>This Website Is Hosted In:</h2>
-    <p>
-      Country: <?php echo $details->country_name ?? 'Unavailable'; ?><br>
-      Region: <?php echo $details->region ?? 'Unavailable'; ?><br>
-      City: <?php echo $details->city ?? 'Unavailable'; ?>
-    </p>
+    <h2>This Website Is Hosted In: <?php echo getenv('REGION')</h2>
 
     <script>
       async function measureSelfLatency() {
