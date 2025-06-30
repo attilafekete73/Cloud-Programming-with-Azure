@@ -4,7 +4,8 @@
   <body>
     <h1>Hello World!</h1>
     <button onclick="measureSelfLatency()">Check Latency</button>
-    <p id="result">Click the button to check latency to this page.</p>
+    <p id="latency">Click the button to check latency to this page.</p>
+    <p id="country"></p>
 
     <script>
       async function measureSelfLatency() {
@@ -15,11 +16,22 @@
           await fetch(endpoint, { method: 'HEAD', cache: 'no-store' });
           const end = performance.now();
           const latency = end - start;
-          document.getElementById("result").textContent = `Latency to this site: ${latency.toFixed(2)} ms`;
+          document.getElementById("latency").textContent = `Latency to this site: ${latency.toFixed(2)} ms`;
         } catch (err) {
-          document.getElementById("result").textContent = `Error checking latency: ${err}`;
+          document.getElementById("latency").textContent = `Error checking latency: ${err}`;
         }
       }
+
+      fetch('https://ipapi.co/json/')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('country').textContent = `You are visiting from: ${data.country_name}`;
+      })
+      .catch(error => {
+        document.getElementById('country').textContent = 'Unable to determine country.';
+        console.error('Error fetching IP data:', error);
+      });
+
     </script>
 
 
