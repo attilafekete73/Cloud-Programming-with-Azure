@@ -133,10 +133,10 @@ resource "azurerm_monitor_autoscale_setting" "autoscale-asia" {
 resource "azurerm_cdn_frontdoor_origin" "as_origin" {
   name                          = "as-origin"
   cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.fd_origin_group.id
-  host_name                     = var.as-appname
+  host_name                     = "${var.as-appname}.azurewebsites.net"
   http_port                     = 80
   https_port                    = 443
-  origin_host_header            = var.as-appname
+  origin_host_header            = "${var.as-appname}.azurewebsites.net"
   priority                      = 1
   weight                        = 1000
   certificate_name_check_enabled = true

@@ -134,10 +134,10 @@ resource "azurerm_monitor_autoscale_setting" "autoscale-eu" {
 resource "azurerm_cdn_frontdoor_origin" "eu_origin" {
   name                          = "eu-origin"
   cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.fd_origin_group.id
-  host_name                     = var.eu-appname
+  host_name                     = "${var.eu-appname}.azurewebsites.net"
   http_port                     = 80
   https_port                    = 443
-  origin_host_header            = var.eu-appname
+  origin_host_header            = "${var.eu-appname}.azurewebsites.net"
   priority                      = 1
   weight                        = 1000
   certificate_name_check_enabled = true
