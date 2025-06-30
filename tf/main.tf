@@ -48,7 +48,7 @@ resource "azurerm_app_service_source_control_token" "github" {
 }
 
 resource "azurerm_resource_group" "fd_rg" {
-  name = "frontdoor_rg"
+  name = "frontdoor-rg"
   location = "West Europe"
 
 }
