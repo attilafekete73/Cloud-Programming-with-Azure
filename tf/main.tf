@@ -47,35 +47,3 @@ resource "azurerm_app_service_source_control_token" "github" {
   token = var.github_token
 }
 
-resource "azurerm_resource_group" "fd_rg" {
-  name = "frontdoor-rg"
-  location = "West Europe"
-
-}
-resource "azurerm_cdn_frontdoor_profile" "fd_profile" {
-  name                = "my-frontdoor-profile"
-  resource_group_name = "frontdoor-rg"
-  sku_name            = "Standard_AzureFrontDoor"
-}
-
-resource "azurerm_cdn_frontdoor_endpoint" "fd_endpoint" {
-  name                     = "my-endpoint"
-  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.fd_profile.id
-}
-
-resource "azurerm_cdn_frontdoor_origin_group" "fd_origin_group" {
-  name                     = "my-origin-group"
-  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.fd_profile.id
-
-  load_balancing {
-    sample_size                 = 4
-    successful_samples_required = 3
-  }
-
-  health_probe {
-    path                = "/"
-    protocol            = "Https"
-    request_type        = "HEAD"
-    interval_in_seconds = 120
-  }
-}
