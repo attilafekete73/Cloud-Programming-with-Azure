@@ -47,6 +47,11 @@ resource "azurerm_app_service_source_control_token" "github" {
   token = var.github_token
 }
 
+resource "azurerm_resource_group" "fd_rg" {
+  name = "frontdoor_rg"
+  location = "West Europe"
+
+}
 resource "azurerm_cdn_frontdoor_profile" "fd_profile" {
   name                = "my-frontdoor-profile"
   resource_group_name = "frontdoor-rg"
