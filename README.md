@@ -1,21 +1,20 @@
 # Cloud-Programming-with-Azure
 
 This is a demo app for a university project in cloud programming. I hosted a simple webpage on Azure, considering that it had to be highly-available, it had to autoscale and visitors from all around the world don't experience latency. 
-For these purposes, I have built my architecture with three app services, and a geographic-based traffic manager which connects them to their respective regions: East US 2 (AMER), Southeast Asia (APAC), West Europe (EMEA). All of these app services have built-in autoscale, which will scale them based on the average CPU percentage every five minutes. 
+For these purposes, I have built my architecture with three app services, and a geographic-based traffic manager which connects them to their respective regions: East US 2 (AMER), Southeast Asia (APAC), West Europe (EMEA). All of these app services have built-in autoscale, which will scale them every minute based on the average CPU percentage of the last five minutes. 
 For testing purposes, I made the visual part of the website in such a way that it shows the latency with a press of a button, it shows the country the user is in and it also shows which app service is serving the website at the moment (EU/AS/US)
 
 # setting it up for yourself
 
-First, to enable terraform to deploy infrastructure, you need to create a service principal using azure cli (after you installed the azure cli):
+First, to enable terraform to deploy infrastructure, you need to create a service principal using cloud shell (PowerShell):
 
 ```
-az login
 az ad sp create-for-rbac --name "github-action-sp" --role contributor --scopes /subscriptions/YOUR_SUBSCRIPTION_ID --sdk-auth
 ```
 
 and copy the output of the later command as the value to an action secret named AZURE_CREDENTIALS
 
-Then you also need to store your tfstate file in azure. For this, use bash
+Then you also need to store your tfstate file in azure.
 
 ```
 $resourceGroup = "myResourceGroup"
