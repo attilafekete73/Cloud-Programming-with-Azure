@@ -7,13 +7,16 @@ For testing purposes, I made the visual part of the website in such a way that i
 # setting it up for yourself
 
 First, to enable terraform to deploy infrastructure, you need to create a service principal using azure cli (after you installed the azure cli):
+
 '''shell
 az login
 az ad sp create-for-rbac --name "github-action-sp" --role contributor --scopes /subscriptions/YOUR_SUBSCRIPTION_ID --sdk-auth
 '''
+
 and copy the output of the later command as the value to an action secret named AZURE_CREDENTIALS
 
 Then you also need to store your tfstate file in azure. For this, use bash
+
 '''shell
 $resourceGroup = "myResourceGroup"
 $location = "westeurope"
