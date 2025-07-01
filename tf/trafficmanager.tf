@@ -31,7 +31,7 @@ resource "azurerm_traffic_manager_azure_endpoint" "asia" {
   name                = "asia-endpoint"
   profile_id          = azurerm_traffic_manager_profile.geo_profile.id
   target_resource_id  = azurerm_linux_web_app.app-asia.id
-  geo_mappings        = ["GEO-AS", "GEO-AN", "GEO-OC"]
+  geo_mappings        = ["GEO-AS", "GEO-AN", "GEO-AP"]
 }
 
 resource "azurerm_traffic_manager_azure_endpoint" "us" {
