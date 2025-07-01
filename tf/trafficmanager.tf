@@ -100,7 +100,7 @@ resource "azurerm_traffic_manager_nested_endpoint" "apac_nested" {
   profile_id          = azurerm_traffic_manager_profile.geo_profile.id
   target_resource_id  = azurerm_traffic_manager_profile.apac_profile.id
   endpoint_location   = "Southeast Asia"
-  geo_mappings        = ["GEO-AS", "GEO-AN", "GEO-OC"]
+  geo_mappings        = ["GEO-AS", "GEO-AN", "GEO-AP"]
   minimum_child_endpoints = 1
 }
 
