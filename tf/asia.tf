@@ -1,8 +1,3 @@
-variable "postfix-asia" {
-  description = "Postfix value from GitHub Actions environment variable POSTFIX (using TF_VAR_postfix)"
-  type        = string
-}
-
 #############################
 # Resource Group
 #############################
@@ -29,7 +24,7 @@ resource "azurerm_service_plan" "asp-asia" {
 #############################
 
 resource "azurerm_linux_web_app" "app-asia" {
-  name                = var.as-appname # Updated to use POSTFIX value
+  name                = var.as-appname
   location            = azurerm_resource_group.rg-asia.location
   resource_group_name = azurerm_resource_group.rg-asia.name
   service_plan_id     = azurerm_service_plan.asp-asia.id

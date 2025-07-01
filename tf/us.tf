@@ -1,7 +1,3 @@
-variable "postfix-us" {
-  description = "Postfix value from GitHub Actions environment variable POSTFIX (using TF_VAR_postfix)"
-  type        = string
-}
 #############################
 # Resource Group
 #############################
@@ -57,7 +53,7 @@ resource "azurerm_linux_web_app" "app-us" {
 #############################
 
 resource "azurerm_app_service_source_control" "app_source-us" {
-  app_id  = "/subscriptions/88eaf9d2-b255-412e-a937-141f9281d5bd/resourceGroups/webapp-rg-us/providers/Microsoft.Web/sites/${var.us-appname}" # Updated to use POSTFIX value
+  app_id  = "/subscriptions/88eaf9d2-b255-412e-a937-141f9281d5bd/resourceGroups/webapp-rg-us/providers/Microsoft.Web/sites/${var.us-appname}"
   branch  = "main"
   repo_url = "https://github.com/attilafekete73/Cloud-Programming-with-Azure"
   depends_on = [

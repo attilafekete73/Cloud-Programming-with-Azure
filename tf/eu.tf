@@ -1,8 +1,3 @@
-variable "postfix-eu" {
-  description = "Postfix value from GitHub Actions environment variable POSTFIX (using TF_VAR_postfix)"
-  type        = string
-}
-
 #############################
 # Resource Group
 #############################
@@ -29,7 +24,7 @@ resource "azurerm_service_plan" "asp-eu" {
 #############################
 
 resource "azurerm_linux_web_app" "app-eu" {
-  name                = var.eu-appname # Updated to use POSTFIX value
+  name                = var.eu-appname
   location            = azurerm_resource_group.rg-eu.location
   resource_group_name = azurerm_resource_group.rg-eu.name
   service_plan_id     = azurerm_service_plan.asp-eu.id
@@ -59,7 +54,7 @@ resource "azurerm_linux_web_app" "app-eu" {
 #############################
 
 resource "azurerm_app_service_source_control" "app_source-eu" {
-  app_id  = "/subscriptions/88eaf9d2-b255-412e-a937-141f9281d5bd/resourceGroups/webapp-rg-eu/providers/Microsoft.Web/sites/${var.eu-appname}" # Updated to use POSTFIX value
+  app_id  = "/subscriptions/88eaf9d2-b255-412e-a937-141f9281d5bd/resourceGroups/webapp-rg-eu/providers/Microsoft.Web/sites/${var.eu-appname}"
   branch  = "main"
   repo_url = "https://github.com/attilafekete73/Cloud-Programming-with-Azure"
   depends_on = [
