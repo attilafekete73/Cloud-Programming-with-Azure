@@ -1,11 +1,11 @@
 resource "azurerm_resource_group" "traffic_manager_rg" {
-  name     = "traffic-manager"
+  name     = "rg-traffic-manager"
   location = "West Europe"
 }
 
 resource "azurerm_traffic_manager_profile" "geo_profile" {
   name                     = "geo-traffic-manager"
-  resource_group_name      = traffic_manager_rg.name
+  resource_group_name      = azurerm_resource_group.traffic_manager_rg.name
   traffic_routing_method   = "Geographic"
 
   dns_config {
@@ -20,35 +20,23 @@ resource "azurerm_traffic_manager_profile" "geo_profile" {
   }
 }
 
-resource "azurerm_traffic_manager_endpoint" "europe" {
-  name                = "europe-endpoint"
-  profile_name        = azurerm_traffic_manager_profile.geo_profile.name
-  resource_group_name = azurerm_resource_group.rg.name
-  type                = "azureEndpoints"
-  target_resource_id  = azurerm_app_service.europe_app.id
-  endpoint_location   = "West Europe"
-
-  geo_mappings = ["GEO-EU","GEO-ME","GEO-AF"]
+resource "azurerm_traffic_manager_azure_endpoint" "eu" {
+  name                = "eu-endpoint"
+  profile_id          = azurerm_traffic_manager_profile.geo_profile.id
+  target_resource_id  = azurerm_linux_web_app.app-eu.id
+  geo_mappings        = ["GEO-EU", "GEO-ME", "GEO-AF"]
 }
 
-resource "azurerm_traffic_manager_endpoint" "us" {
-  name                = "us-endpoint"
-  profile_name        = azurerm_traffic_manager_profile.geo_profile.name
-  resource_group_name = azurerm_resource_group.rg.name
-  type                = "azureEndpoints"
-  target_resource_id  = azurerm_app_service.us_app.id
-  endpoint_location   = "East US"
-
-  geo_mappings = ["GEO-NA","GEO-SA"]
-}
-
-resource "azurerm_traffic_manager_endpoint" "asia" {
+resource "azurerm_traffic_manager_azure_endpoint" "asia" {
   name                = "asia-endpoint"
-  profile_name        = azurerm_traffic_manager_profile.geo_profile.name
-  resource_group_name = azurerm_resource_group.rg.name
-  type                = "azureEndpoints"
-  target_resource_id  = azurerm_app_service.asia_app.id
-  endpoint_location   = "Southeast Asia"
+  profile_id          = azurerm_traffic_manager_profile.geo_profile.id
+  target_resource_id  = azurerm_linux_web_app.app-asia.id
+  geo_mappings        = ["GEO-AS", "GEO-AN", "GEO-OC"]
+}
 
-  geo_mappings = ["GEO-AS","GEO-AN","GEO-OC"]
+resource "azurerm_traffic_manager_azure_endpoint" "us" {
+  name                = "us-endpoint"
+  profile_id          = azurerm_traffic_manager_profile.geo_profile.id
+  target_resource_id  = azurerm_linux_web_app.app-us.id
+  geo_mappings        = ["GEO-NA", "GEO-SA"]
 }
