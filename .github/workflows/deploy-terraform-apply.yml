@@ -3,7 +3,6 @@ name: Deploy Terraform to Azure Apply
 on:
   workflow_dispatch:
     
-
 jobs:
   terraform:
     runs-on: ubuntu-latest
@@ -14,14 +13,12 @@ jobs:
       - name: Azure Login
         uses: azure/login@v2
         with:
-          # Create a secret in your repository named AZURE_CREDENTIALS
-          # that contains your Azure service principal credentials in JSON format.
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Set Up Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: '1.3.5'  # Update this to the version of Terraform you prefer
+          terraform_version: '1.3.5'
       
       - name: Set TF_VAR_github_token from secret
         run: echo "TF_VAR_github_token=${{ secrets.GH_ACCESS_TOKEN }}" >> $GITHUB_ENV
@@ -30,7 +27,6 @@ jobs:
 
       - name: Terraform Init
         env:
-          ARM_CREDS: ${{ secrets.AZURE_CREDENTIALS }}
           ARM_CLIENT_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
           ARM_CLIENT_SECRET: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
           ARM_TENANT_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).tenantId }}

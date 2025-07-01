@@ -4,7 +4,7 @@
 
 resource "azurerm_resource_group" "rg-asia" {
   name     = "webapp-rg-asia"
-  location = "Southeast Asia"  # use the region of your choice
+  location = "Southeast Asia"
 }
 
 #############################
@@ -36,17 +36,12 @@ resource "azurerm_linux_web_app" "app-asia" {
   }
 
   app_settings = {
-    # If you have configuration settings, add them here.
-    # e.g., "WEBSITE_RUN_FROM_PACKAGE" = "1"
     "WEBSITES_PORT"          = "80"
     "DOCKER_ENABLE_CI"       = "true"
     "WEBSITE_RUN_FROM_PACKAGE" = "1"
     "REGION"                  = "AS"
 
   }
-
-  # Note: source_control block is not supported for azurerm_linux_web_app.
-  # For GitHub deployment, use GitHub Actions or other deployment methods.
 }
 
 #############################
