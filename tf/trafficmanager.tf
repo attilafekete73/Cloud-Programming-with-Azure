@@ -20,26 +20,7 @@ resource "azurerm_traffic_manager_profile" "geo_profile" {
   }
 }
 
-resource "azurerm_traffic_manager_azure_endpoint" "eu" {
-  name                = "eu-endpoint"
-  profile_id          = azurerm_traffic_manager_profile.geo_profile.id
-  target_resource_id  = azurerm_linux_web_app.app-eu.id
-  geo_mappings        = ["GEO-EU", "GEO-ME", "GEO-AF"]
-}
 
-resource "azurerm_traffic_manager_azure_endpoint" "asia" {
-  name                = "asia-endpoint"
-  profile_id          = azurerm_traffic_manager_profile.geo_profile.id
-  target_resource_id  = azurerm_linux_web_app.app-asia.id
-  geo_mappings        = ["GEO-AS", "GEO-AN", "GEO-AP"]
-}
-
-resource "azurerm_traffic_manager_azure_endpoint" "us" {
-  name                = "us-endpoint"
-  profile_id          = azurerm_traffic_manager_profile.geo_profile.id
-  target_resource_id  = azurerm_linux_web_app.app-us.id
-  geo_mappings        = ["GEO-NA", "GEO-SA"]
-}
 
 # High-availability for EMEA
 resource "azurerm_traffic_manager_profile" "emea_profile" {
