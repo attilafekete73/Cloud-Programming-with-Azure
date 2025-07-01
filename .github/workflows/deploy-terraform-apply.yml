@@ -28,18 +28,26 @@ jobs:
       - name: Set subsciption ID
         run: echo "TF_VAR_subscription_id=${{ vars.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
 
-      #- name: Terraform Init
-       # run: terraform init -backend-config="resource_group_name=tfstate" -backend-config="storage_account_name=tfstate28091" -backend-config="container_name=tfstate" -backend-config="key=terraform.tfstate" -backend-config="access_key=${{ secrets.AZURE_TFSTATE_STORAGE_ACCOUNT_KEY }}" -backend-config="client_id=${{ secrets.AZURE_CLIENT_ID }}" -backend-config="client_secret=${{ secrets.AZURE_CLIENT_SECRET }}" -backend-config="tenant_id=${{ secrets.AZURE_APPDEPLOY_TENANT_ID}}" -backend-config="subscription_id=${{ secrets.AZURE_APPDEPLOY_SUBSCRIPTION_ID }}"
-        #working-directory: ./tf
-      - name: Set up environment for Terraform
+      - name: Terraform Init
         env:
+          ARM_CREDS: ${{ secrets.AZURE_CREDENTIALS }}
           ARM_CLIENT_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
           ARM_CLIENT_SECRET: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
-          ARM_SUBSCRIPTION_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).subscriptionId }}
           ARM_TENANT_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).tenantId }}
+          ARM_SUBSCRIPTION_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).subscriptionId }}
+          TFSTATE_ACCESS_KEY: ${{ secrets.AZURE_TFSTATE_STORAGE_ACCOUNT_KEY }}
         run: |
-          terraform init
-
+          terraform init \
+            -backend-config="resource_group_name=tfstate" \
+            -backend-config="storage_account_name=tfstate28091" \
+            -backend-config="container_name=tfstate" \
+            -backend-config="key=terraform.tfstate" \
+            -backend-config="access_key=$TFSTATE_ACCESS_KEY" \
+            -backend-config="client_id=$ARM_CLIENT_ID" \
+            -backend-config="client_secret=$ARM_CLIENT_SECRET" \
+            -backend-config="tenant_id=$ARM_TENANT_ID" \
+            -backend-config="subscription_id=$ARM_SUBSCRIPTION_ID"
+        working-directory: ./tf
 
       - name: Terraform Apply
         run: terraform apply -lock-timeout=60s -auto-approve
