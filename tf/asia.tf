@@ -54,7 +54,7 @@ resource "azurerm_app_service_source_control" "app_source-asia" {
   repo_url = "https://github.com/attilafekete73/Cloud-Programming-with-Azure"
   depends_on = [
     azurerm_app_service_source_control_token.github,
-    azurerm_azurerm_linux_web_app.app-asia
+    azurerm_linux_web_app.app-asia
   ]
 }
 
