@@ -52,7 +52,7 @@ resource "azurerm_traffic_manager_profile" "as_profile" {
   monitor_config {
     protocol = "HTTP"
     port     = 80
-    path     = "/healthz/"
+    path     = "/healthz"
   }
 }
 
