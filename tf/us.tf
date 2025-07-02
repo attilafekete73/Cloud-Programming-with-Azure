@@ -4,7 +4,7 @@
 
 resource "azurerm_resource_group" "rg-us" {
   name     = "webapp-rg-us"
-  location = var.us_location
+  location = "West US 2"
 }
 
 #############################

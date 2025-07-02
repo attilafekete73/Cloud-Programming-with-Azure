@@ -1,18 +1,3 @@
-variable "eu_location" {
-  description = "North Europe"
-  type = string
-}
-
-# variable "as_location" {
-#   description = "Southeast Asia"
-#   type = string
-# }
-
-variable "us_location" {
-  description = "West US 2"
-  type = string
-}
-
 variable "subscription_id" {
   description = "get subscription ID"
   type        = string
