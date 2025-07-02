@@ -17,6 +17,8 @@ resource "azurerm_traffic_manager_profile" "eu_profile" {
     port     = 80
     path     = "/healthz"
   }
+
+  depends_on = [ azurerm_resource_group.traffic_manager_rg ]
 }
 
 resource "azurerm_traffic_manager_azure_endpoint" "eu_primary" {
@@ -24,6 +26,7 @@ resource "azurerm_traffic_manager_azure_endpoint" "eu_primary" {
   profile_id          = azurerm_traffic_manager_profile.eu_profile.id
   target_resource_id  = azurerm_linux_web_app.app-eu.id
   priority            = 1
+  depends_on = [ azurerm_traffic_manager_profile.eu_profile ]
 }
 
 resource "azurerm_traffic_manager_azure_endpoint" "eu_backup_asia" {
@@ -31,6 +34,7 @@ resource "azurerm_traffic_manager_azure_endpoint" "eu_backup_asia" {
   profile_id          = azurerm_traffic_manager_profile.eu_profile.id
   target_resource_id  = azurerm_linux_web_app.app-asia.id
   priority            = 2
+  depends_on = [ azurerm_traffic_manager_profile.eu_profile ]
 }
 
 resource "azurerm_traffic_manager_azure_endpoint" "eu_backup_us" {
@@ -38,6 +42,7 @@ resource "azurerm_traffic_manager_azure_endpoint" "eu_backup_us" {
   profile_id          = azurerm_traffic_manager_profile.eu_profile.id
   target_resource_id  = azurerm_linux_web_app.app-us.id
   priority            = 3
+  depends_on = [ azurerm_traffic_manager_profile.eu_profile ]
 }
 
 # Child profile for Asia with failover for US and EU
@@ -54,6 +59,8 @@ resource "azurerm_traffic_manager_profile" "as_profile" {
     port     = 80
     path     = "/healthz"
   }
+
+  depends_on = [ azurerm_resource_group.traffic_manager_rg ]
 }
 
 resource "azurerm_traffic_manager_azure_endpoint" "as_primary" {
@@ -61,6 +68,7 @@ resource "azurerm_traffic_manager_azure_endpoint" "as_primary" {
   profile_id          = azurerm_traffic_manager_profile.as_profile.id
   target_resource_id  = azurerm_linux_web_app.app-asia.id
   priority            = 1
+  depends_on = [ azurerm_traffic_manager_profile.as_profile ]
 }
 
 resource "azurerm_traffic_manager_azure_endpoint" "as_backup_us" {
@@ -68,6 +76,7 @@ resource "azurerm_traffic_manager_azure_endpoint" "as_backup_us" {
   profile_id          = azurerm_traffic_manager_profile.as_profile.id
   target_resource_id  = azurerm_linux_web_app.app-us.id
   priority            = 2
+  depends_on = [ azurerm_traffic_manager_profile.as_profile ]
 }
 
 resource "azurerm_traffic_manager_azure_endpoint" "as_backup_eu" {
@@ -75,6 +84,7 @@ resource "azurerm_traffic_manager_azure_endpoint" "as_backup_eu" {
   profile_id          = azurerm_traffic_manager_profile.as_profile.id
   target_resource_id  = azurerm_linux_web_app.app-eu.id
   priority            = 3
+  depends_on = [ azurerm_traffic_manager_profile.as_profile ]
 }
 
 # Child profile for US with failover for EU and AS
@@ -91,6 +101,8 @@ resource "azurerm_traffic_manager_profile" "us_profile" {
     port     = 80
     path     = "/healthz"
   }
+
+  depends_on = [ azurerm_resource_group.traffic_manager_rg ]
 }
 
 resource "azurerm_traffic_manager_azure_endpoint" "us_primary" {
@@ -98,6 +110,7 @@ resource "azurerm_traffic_manager_azure_endpoint" "us_primary" {
   profile_id          = azurerm_traffic_manager_profile.us_profile.id
   target_resource_id  = azurerm_linux_web_app.app-us.id
   priority            = 1
+  depends_on = [ azurerm_traffic_manager_profile.us_profile ]
 }
 
 resource "azurerm_traffic_manager_azure_endpoint" "us_backup_eu" {
@@ -105,6 +118,7 @@ resource "azurerm_traffic_manager_azure_endpoint" "us_backup_eu" {
   profile_id          = azurerm_traffic_manager_profile.us_profile.id
   target_resource_id  = azurerm_linux_web_app.app-eu.id
   priority            = 2
+  depends_on = [ azurerm_traffic_manager_profile.us_profile ]
 }
 
 resource "azurerm_traffic_manager_azure_endpoint" "us_backup_as" {
@@ -112,6 +126,7 @@ resource "azurerm_traffic_manager_azure_endpoint" "us_backup_as" {
   profile_id          = azurerm_traffic_manager_profile.us_profile.id
   target_resource_id  = azurerm_linux_web_app.app-asia.id
   priority            = 3
+  depends_on = [ azurerm_traffic_manager_profile.us_profile ]
 }
 
 # Geo parent profile
@@ -129,6 +144,8 @@ resource "azurerm_traffic_manager_profile" "geo_profile" {
     port     = 80
     path     = "/healthz"
   }
+
+  depends_on = [ azurerm_resource_group.traffic_manager_rg ]
 }
 
 resource "azurerm_traffic_manager_nested_endpoint" "eu_nested" {
@@ -137,6 +154,7 @@ resource "azurerm_traffic_manager_nested_endpoint" "eu_nested" {
   target_resource_id  = azurerm_traffic_manager_profile.eu_profile.id
   geo_mappings        = ["GEO-EU", "GEO-ME", "GEO-AF"]
   minimum_child_endpoints = 1
+  depends_on = [ azurerm_traffic_manager_profile.geo_profile ]
 }
 
 resource "azurerm_traffic_manager_nested_endpoint" "asia_nested" {
@@ -145,6 +163,7 @@ resource "azurerm_traffic_manager_nested_endpoint" "asia_nested" {
   target_resource_id  = azurerm_traffic_manager_profile.as_profile.id
   geo_mappings        = ["GEO-AS", "GEO-AN", "GEO-AP"]
   minimum_child_endpoints = 1
+  depends_on = [ azurerm_traffic_manager_profile.geo_profile ]
 }
 
 resource "azurerm_traffic_manager_nested_endpoint" "us_nested" {
@@ -153,4 +172,5 @@ resource "azurerm_traffic_manager_nested_endpoint" "us_nested" {
   target_resource_id  = azurerm_traffic_manager_profile.us_profile.id
   geo_mappings        = ["GEO-NA", "GEO-SA"]
   minimum_child_endpoints = 1
+  depends_on = [ azurerm_traffic_manager_profile.geo_profile ]
 }
