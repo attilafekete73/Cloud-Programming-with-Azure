@@ -3,10 +3,10 @@ variable "eu_location" {
   type = string
 }
 
-variable "as_location" {
-  description = "Southeast Asia"
-  type = string
-}
+# variable "as_location" {
+#   description = "Southeast Asia"
+#   type = string
+# }
 
 variable "us_location" {
   description = "West US 2"
