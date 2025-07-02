@@ -35,7 +35,7 @@ jobs:
         run: |
           terraform init \
             -backend-config="resource_group_name=tfstate" \
-            -backend-config="storage_account_name=tfstate28091" \
+            -backend-config="storage_account_name=tfstate3628800" \
             -backend-config="container_name=tfstate" \
             -backend-config="key=terraform.tfstate" \
             -backend-config="access_key=$TFSTATE_ACCESS_KEY" \

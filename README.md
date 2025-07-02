@@ -14,17 +14,18 @@ az ad sp create-for-rbac --name "github-action-sp" --role contributor --scopes /
 
 and copy the output of the later command as the value to an action secret named AZURE_CREDENTIALS
 
-Then you also need to store your tfstate file in azure.
+Then you also need to store your tfstate file in azure, and you need to store its output as an action secret named AZURE_TFSTATE_STORAGE_ACCOUNT_KEY
 
 ```
-$resourceGroup = "myResourceGroup"
+$resourceGroup = "tfstate"
 $location = "westeurope"
-$storageAccount = "tfstate$((Get-Random -Maximum 99999))"
+$storageAccount = "tfstate3628800"
 $containerName = "tfstate"
 az group create --name $resourceGroup --location $location
 az storage account create --name $storageaccount --resource-group $resourceGroup --location $location --sku Standard_LRS --encryption-services blob
 az storage container create --name $containerName --account-name $storageaccount
 $accountKey = (az storage account keys list --resource-group $resourceGroup --account-name $storageaccount --query '[0].value' -o tsv)
+$accountKey
 ```
 
 Then you just need to go to https://github.com/settings/personal-access-tokens to create a fine-grained GitHub access token. You need to select: Administration (Read and write), Codespace Secrets (Read and write), Contents (Read and write), Secrets (Read-only), and Webhooks (Read and write). Then you need to save the access token generated to an action secret named GH_ACCESS_TOKEN
