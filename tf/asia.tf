@@ -4,7 +4,7 @@
 
 resource "azurerm_resource_group" "rg-asia" {
   name     = "webapp-rg-asia"
-  location = "Southeast Asia"
+  location = var.as_location
 }
 
 #############################
