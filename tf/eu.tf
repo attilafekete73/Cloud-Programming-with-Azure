@@ -4,7 +4,7 @@
 
 resource "azurerm_resource_group" "rg-eu" {
   name     = "webapp-rg-eu"
-  location = "North Europe"
+  location = "West Europe"
 }
 
 #############################

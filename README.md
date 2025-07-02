@@ -32,7 +32,7 @@ Then you just need to go to https://github.com/settings/personal-access-tokens t
 
 You also need to save your Azure subscription ID in an action variable named AZURE_SUBSCRIPTION_ID
 
-To launch the project, first launch the "Deploy Terraform to Azure Apply" and then launch the "Build and Deploy PHP app to Azure Web App" (if either one would give you an error, just run it again, it will probably be because the instance couldn't be set up correctly for the first time)
+To launch the project, first launch the "Deploy Terraform to Azure Apply" and then launch the "Build and Deploy PHP app to Azure Web App" (if either one would give you an error, just run it again, it will probably be because the instance couldn't be set up correctly for the first time). If you get a 409 error for o ne of the app services, just go to the terraform file of the region that gave the error and change the region to another one in the 7th line. 
 
 Then before you are done, you have to do one more thing in the cloud shell:
 ```
