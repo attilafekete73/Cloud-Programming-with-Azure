@@ -31,5 +31,14 @@ Then you just need to go to https://github.com/settings/personal-access-tokens t
 
 You also need to save your Azure subscription ID in an action variable named AZURE_SUBSCRIPTION_ID
 
+
 To launch the project, first launch the "Deploy Terraform to Azure Apply" and then launch the "Build and Deploy PHP app to Azure Web App" (if either one would give you an error, just run it again, it will probably be because the instance couldn't be set up correctly for the first time)
+
+Then before you are done, you have to do one more thing in the cloud shell:
+```
+az webapp config hostname add --resource-group webapp-rg-asia --webapp-name cloudprogrammingproject-3628800-as --hostname mygeoapp.trafficmanager.net
+az webapp config hostname add --resource-group webapp-rg-eu --webapp-name cloudprogrammingproject-3628800-eu --hostname mygeoapp.trafficmanager.net
+az webapp config hostname add --resource-group webapp-rg-us --webapp-name cloudprogrammingproject-3628800-us --hostname mygeoapp.trafficmanager.net
+```
+
 Then, you just go to the website defined by your trafficmanager (if you don't change anything in the code, it is called mygeoapp.trafficmanager.net) and ENJOY!
